@@ -65,7 +65,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     </div>';
         if ($_COOKIE["user"] == md5('admin#$%^adf')) {
             if (@$_GET['sno']) {
-                $sql = "INSERT INTO student VALUES(?,?,?,?,?,'合格')";
+                $sql = "INSERT INTO student VALUES(?,?,?,?,?)";
                 $stmt = $conn->stmt_init();
 
                 if ($stmt->prepare($sql)) {
@@ -90,9 +90,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     } else if (@$_GET['action'] == 'search') {
         echo '
                     <input type="hidden" name="action" value="search">
-                    <div class="col">
-                        <input type="text" class="form-control" name="sstatus" placeholder="状态">
-                    </div>
+                    
                         
                     <div class="col">
                         <input type="submit" value="查询" class="btn btn-primary">
@@ -117,9 +115,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
         if (@$_GET['sdept']) {
             $sql = $sql . "AND sdept='" . $_GET['sdept'] . "'";
         }
-        if (@$_GET['sstatus']) {
-            $sql = $sql . "AND sstatus='" . $_GET['sstatus'] . "'";
-        }
+
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
 
@@ -132,7 +128,6 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
                 <div class="col">' . $row["ssex"] . '</div>
                 <div class="col">' . $row["sclass"] . '</div>
                 <div class="col">' . $row["sdept"] . '</div>
-                <div class="col">' . $row["sstatus"] . '</div>
                 
                 <form method="GET" action="stu.php">
                 <input type="hidden" name="action" value="alter">

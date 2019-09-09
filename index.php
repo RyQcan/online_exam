@@ -100,7 +100,7 @@ if ($conn->connect_error) {
 
     echarts.init(document.getElementById('cc')).setOption({
     title : {
-        text: '学籍状态',
+        text: '试题统计',
         x:'center'
     },
     tooltip : {
@@ -110,51 +110,51 @@ if ($conn->connect_error) {
     legend: {
         orient: 'vertical',
         left: 'left',
-        data: ['优秀','合格','试读','退学']
+        data: ['数学','物理','化学','计算机']
     },
     series : [
         {
-            name: '学籍状态',
+            name: '试题统计',
             type: 'pie',
             radius : '55%',
             center: ['50%', '60%'],
             data:[
                 {value:<?php 
-                  $sql="SELECT COUNT(*) FROM student WHERE sstatus='优秀'";
+                  $sql="SELECT COUNT(*) FROM question WHERE quest_type='数学'";
                   $result = $conn->query($sql);
                   if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                       echo $row['COUNT(*)'];
                     }
                   }
-                  ?>, name:'优秀'},
+                  ?>, name:'数学'},
                 {value:<?php 
-                  $sql="SELECT COUNT(*) FROM student WHERE sstatus='合格'";
+                  $sql="SELECT COUNT(*) FROM question WHERE quest_type='物理'";
                   $result = $conn->query($sql);
                   if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                       echo $row['COUNT(*)'];
                     }
                   }
-                  ?>, name:'合格'},
+                  ?>, name:'物理'},
                 {value:<?php 
-                  $sql="SELECT COUNT(*) FROM student WHERE sstatus='试读'";
+                  $sql="SELECT COUNT(*) FROM question WHERE quest_type='化学'";
                   $result = $conn->query($sql);
                   if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                       echo $row['COUNT(*)'];
                     }
                   }
-                  ?>, name:'试读'},
+                  ?>, name:'化学'},
                 {value:<?php 
-                  $sql="SELECT COUNT(*) FROM student WHERE sstatus='退学'";
+                  $sql="SELECT COUNT(*) FROM question WHERE quest_type='计算机'";
                   $result = $conn->query($sql);
                   if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                       echo $row['COUNT(*)'];
                     }
                   }
-                  ?>, name:'退学'}
+                  ?>, name:'计算机'}
             ],
             itemStyle: {
                 emphasis: {
