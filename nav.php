@@ -7,7 +7,7 @@ if (!isset($_COOKIE["user"])) {
 } else {
   echo '
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php">学籍管理</a>
+  <a class="navbar-brand" href="index.php">OJ考试系统</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,26 +22,30 @@ if (!isset($_COOKIE["user"])) {
       </li>  
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          学生档案</a>
+          考生管理</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-          <a class="dropdown-item" href="stu.php?action=add">入学管理</a>
-          <a class="dropdown-item" href="stu.php?action=search">查询学生</a>
+          <a class="dropdown-item" href="stu.php?action=add">添加考生</a>
+          <a class="dropdown-item" href="stu.php?action=search">查询考生</a>
         </div>
       </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          成绩管理</a>
+          考题管理</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-          <a class="dropdown-item" href="score.php?action=add">输入成绩</a>
-          <a class="dropdown-item" href="score.php?action=search">查询成绩</a>
+          <a class="dropdown-item" href="questions.php?action=add">添加考题</a>
+          <a class="dropdown-item" href="questions.php?action=search">查询考题</a>
         </div>
       </li>
-
       
       <li class="nav-item">
-        <a class="nav-link" href="stu.php?action=sub">毕业管理</a>
+        <a class="nav-link" href="quiz.php?action=index">考试管理</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="score.php?action=search">成绩查询</a>
+      </li>
+      
       <li class="nav-item">
         <a class="nav-link" href="back.php">系统维护</a>
       </li>';
