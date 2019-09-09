@@ -41,9 +41,26 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     echo '<div class="col">
                         <input type="text" class="form-control" name="quest_type" placeholder="题型">
                     </div>
+                   
+                    
                     <div class="col">
-                        <input type="text" class="form-control" name="stem" placeholder="题干">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="quest_diff" id="inlineRadio1" value="难">
+                            <label class="form-check-label" for="inlineRadio1">难</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="quest_diff" id="inlineRadio2" value="中">
+                            <label class="form-check-label" for="inlineRadio2">中</label>
+                        </div>
+                         <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="quest_diff" id="inlineRadio3" value="易">
+                            <label class="form-check-label" for="inlineRadio3">易</label>
+                        </div>
                     </div>
+                          
+                      <div class="col">
+                        <input type="text" class="form-control" name="stem" placeholder="题干">
+                    </div>             
                      <div class="col">
                         <input type="text" class="form-control" name="choice_a" placeholder="A选项">
                     </div> 
@@ -58,20 +75,20 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
                     </div>
                     <div class="col">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="right_choice" id="inlineRadio1" value="A">
-                            <label class="form-check-label" for="inlineRadio1">A</label>
+                            <input class="form-check-input" type="radio" name="right_choice" id="Radio1" value="A">
+                            <label class="form-check-label" for="Radio1">A</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="right_choice" id="inlineRadio2" value="B">
-                            <label class="form-check-label" for="inlineRadio2">B</label>
+                            <input class="form-check-input" type="radio" name="right_choice" id="Radio2" value="B">
+                            <label class="form-check-label" for="Radio2">B</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="right_choice" id="inlineRadio3" value="C">
-                            <label class="form-check-label" for="inlineRadio2">C</label>
+                            <input class="form-check-input" type="radio" name="right_choice" id="Radio3" value="C">
+                            <label class="form-check-label" for="Radio3">C</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="right_choice" id="inlineRadio4" value="D">
-                            <label class="form-check-label" for="inlineRadio2">D</label>
+                            <input class="form-check-input" type="radio" name="right_choice" id="Radio4" value="D">
+                            <label class="form-check-label" for="Radio4">D</label>
                         </div>
                     </div>
                     ';
@@ -87,12 +104,13 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     </div>';
         if ($_COOKIE["user"] == md5('admin#$%^adf')) {
             if (@$_GET['quest_type']) {
-                $sql = "INSERT INTO question VALUES(?,?,?,?,?,?,?,?)";
+                $sql = "INSERT INTO question VALUES(?,?,?,?,?,?,?,?,?,?)";
                 $stmt = $conn->stmt_init();
 
                 if ($stmt->prepare($sql)) {
-                    $id='';
-                    $stmt->bind_param("isssssss", $id,$_GET['quest_type'], $_GET['stem'], $_GET['choice_a'], $_GET['choice_b'], $_GET['choice_c'], $_GET['choice_d'], $_GET['right_choice']);
+                    $id = '';
+                    $flag ='';
+                    $stmt->bind_param("issssssssi", $id, $_GET['quest_type'], $_GET['quest_diff'], $_GET['stem'], $_GET['choice_a'], $_GET['choice_b'], $_GET['choice_c'], $_GET['choice_d'], $_GET['right_choice'],$flag);
                     if ($stmt->execute()) {
                         echo '</br><div class="alert alert-success" role="alert">
                     添加成功!
@@ -127,22 +145,25 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
             $sql = $sql . "AND quest_no='" . $_GET['quest_no'] . "'";
         }
         if (@$_GET['quest_type']) {
-            $sql = $sql . "AND quest_type ='" . $_GET['quest_type'] . "%'";
+            $sql = $sql . "AND quest_type ='" . $_GET['quest_type'] . "'";
+        }
+        if (@$_GET['quest_diff']) {
+            $sql = $sql . "AND quest_diff ='" . $_GET['quest_diff'] . "'";
         }
         if (@$_GET['stem']) {
-            $sql = $sql . "AND stem like'" . $_GET['stem'] . "'";
+            $sql = $sql . "AND stem like'" . $_GET['stem'] . "%'";
         }
         if (@$_GET['choice_a']) {
-            $sql = $sql . "AND choice_a like'" . $_GET['choice_a'] . "'";
+            $sql = $sql . "AND choice_a like'" . $_GET['choice_a'] . "%'";
         }
         if (@$_GET['choice_b']) {
-            $sql = $sql . "AND choice_b like'" . $_GET['choice_b'] . "'";
+            $sql = $sql . "AND choice_b like'" . $_GET['choice_b'] . "%'";
         }
         if (@$_GET['choice_c']) {
-            $sql = $sql . "AND choice_c like'" . $_GET['choice_c'] . "'";
+            $sql = $sql . "AND choice_c like'" . $_GET['choice_c'] . "%'";
         }
         if (@$_GET['choice_d']) {
-            $sql = $sql . "AND choice_d like'" . $_GET['choice_d'] . "'";
+            $sql = $sql . "AND choice_d like'" . $_GET['choice_d'] . "%'";
         }
         if (@$_GET['right_choice']) {
             $sql = $sql . "AND right_choice='" . $_GET['right_choice'] . "'";
@@ -157,6 +178,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
             <div class="row">
                 <div class="col">' . $row["quest_no"] . '</div>
                 <div class="col">' . $row["quest_type"] . '</div>
+                <div class="col">' . $row["quest_diff"] . '</div>
                 <div class="col">' . $row["stem"] . '</div>
                 <div class="col">' . $row["choice_a"] . '</div>
                 <div class="col">' . $row["choice_b"] . '</div>
