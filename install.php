@@ -18,7 +18,7 @@ if ($conn->query($sql) === true) {
         die("Connection failed: " . $conn2->connect_error);
     }
 
-    // 教师表
+    // 教师表吖
     $sql10 = "CREATE TABLE users(
         id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
         username varchar(30) NOT NULL,
