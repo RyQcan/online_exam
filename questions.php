@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <title>学生管理</title>
+    <title>考题管理</title>
 </head>
 <body>
 <!-- 导航栏 -->
@@ -109,8 +109,8 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
 
                 if ($stmt->prepare($sql)) {
                     $id = '';
-                    $flag ='';
-                    $stmt->bind_param("issssssssi", $id, $_GET['quest_type'], $_GET['quest_diff'], $_GET['stem'], $_GET['choice_a'], $_GET['choice_b'], $_GET['choice_c'], $_GET['choice_d'], $_GET['right_choice'],$flag);
+                    $flag = '';
+                    $stmt->bind_param("issssssssi", $id, $_GET['quest_type'], $_GET['quest_diff'], $_GET['stem'], $_GET['choice_a'], $_GET['choice_b'], $_GET['choice_c'], $_GET['choice_d'], $_GET['right_choice'], $flag);
                     if ($stmt->execute()) {
                         echo '</br><div class="alert alert-success" role="alert">
                     添加成功!
@@ -215,9 +215,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
 
             $sql = "delete from question where quest_no='" . $_GET['quest_no'] . "'";
             if ($conn->query($sql)) {
-                echo '</br><div class="alert alert-success" role="alert">
-                    已删除
-                    </div>';
+                header("refresh:0;url=questions.php?action=search");
             } else {
                 echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
             }
@@ -226,9 +224,125 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
         echo '<div class="alert alert-danger" role="alert">你的权限不够!请联系管理员</div>';
     }
 } else if (@$_GET['action'] == 'alter') {
+    $sql = "SELECT * FROM question WHERE quest_no='" . $_GET['quest_no'] . "'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+
+        while ($row = $result->fetch_assoc()) {
+            echo '
+            
+                <form method="GET" action="questions.php">
+                <div class="form-row">
+                    <div class="col">
+                            <input type="text" class="form-control" name="quest_type" value=' . $row["quest_type"] . '>
+                    </div>
+                <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["quest_diff"] == '难') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="quest_diff" id="inlineRadio1" value="难">
+                            <label class="form-check-label" for="inlineRadio1">难</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["quest_diff"] == '中') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="quest_diff" id="inlineRadio2" value="中">
+                            <label class="form-check-label" for="inlineRadio2">中</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["quest_diff"] == '易') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="quest_diff" id="inlineRadio3" value="易">
+                            <label class="form-check-label" for="inlineRadio3">易</label>
+                        </div>
+                  </div>    
+                  <div class="col">
+                
+                        <input type="text" class="form-control" name="stem" value=' . $row["stem"] . '>
+                        </div>  
+                    <div class="col">
+                        <input type="text" class="form-control" name="choice_a" value=' . $row["choice_a"] . '>
+                  </div>  
+                   <div class="col">
+                        <input type="text" class="form-control" name="choice_b" value=' . $row["choice_b"] . '>
+                  </div>  
+                   <div class="col">
+                        <input type="text" class="form-control" name="choice_c" value=' . $row["choice_c"] . '>
+                  </div>  
+                   <div class="col">
+                        <input type="text" class="form-control" name="choice_d" value=' . $row["choice_d"] . '>
+                  </div>  
+                  <div class="col">
+           <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["right_choice"] == 'A') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="right_choice" id="inlineRadio1" value="A">
+                            <label class="form-check-label" for="inlineRadio1">A</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["right_choice"] == 'B') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="right_choice" id="inlineRadio2" value="B">
+                            <label class="form-check-label" for="inlineRadio2">B</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["right_choice"] == 'C') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="right_choice" id="inlineRadio3" value="C">
+                            <label class="form-check-label" for="inlineRadio3">C</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ';
+            if ($row["right_choice"] == 'D') {
+                echo ' checked ';
+            }
+            echo 'type="radio" name="right_choice" id="inlineRadio4" value="D">
+                            <label class="form-check-label" for="inlineRadio4">D</label>
+                        </div>
+                  </div>   
+           
+
+</div>
+                <input type="hidden" name="action" value="alteraction">
+                <input type="hidden" name="quest_no" value=' . $row["quest_no"] . '>
+                <input type="submit" value="修改" class="btn btn-primary">
+                </div>  
+                </form>
+                
+           ';
+        }
+        echo '
+        </ul>
+    </div>';
+    }
+
+} else if (@$_GET['action'] == 'alteraction') {
+    if ($_COOKIE["user"] == md5('admin#$%^adf')) {
+        $sql = "UPDATE question SET quest_type='" . $_GET['quest_type'] . "', quest_diff='" . $_GET['quest_diff'] . "',stem='" . $_GET['stem'] . "',choice_a='" . $_GET['choice_a'] ."',choice_b='" . $_GET['choice_b'] ."',choice_c='" . $_GET['choice_c'] ."',choice_d='" . $_GET['choice_d'] . "',right_choice='" . $_GET['right_choice'] ."' WHERE quest_no='" . $_GET['quest_no'] . "'";
+        if ($conn->query($sql)) {
+            header("refresh:0;url=questions.php?action=search");
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
+        }
+    } else {
+        echo '<div class="alert alert-danger" role="alert">你的权限不够!请联系管理员</div>';
+    }
 
 } else {
-    header("refresh:1;url=index.php");
+    header("refresh:0;url=index.php");
     exit();
 }
 ?>

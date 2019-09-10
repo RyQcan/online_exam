@@ -18,7 +18,7 @@ if ($conn->query($sql) === true) {
         die("Connection failed: " . $conn2->connect_error);
     }
 
-    // 教师表吖
+    // 教师表
     $sql10 = "CREATE TABLE users(
         id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
         username varchar(30) NOT NULL,
@@ -45,7 +45,7 @@ if ($conn->query($sql) === true) {
         right_choice varchar(8) not null,
         choose_flag int NOT NULL DEFAULT 0
         )ENGINE=INNODB  DEFAULT CHARSET=utf8";
-    // 考试表
+    // 试卷表
     $sql13 = "CREATE TABLE quiz(
         quiz_no int PRIMARY KEY AUTO_INCREMENT NOT NULL,
         quiz_diff varchar(8) NOT NULL,
@@ -53,7 +53,7 @@ if ($conn->query($sql) === true) {
         per_score int NOT NULL,
         questions varchar(512) NOT NULL
         )ENGINE=INNODB  DEFAULT CHARSET=utf8";
-    // 出题规则表
+    // 考试规则表
     $sql14 = "CREATE TABLE rule(
         rule_no int PRIMARY KEY AUTO_INCREMENT NOT NULL,
         quiz_diff varchar(8) NOT NULL,
@@ -65,7 +65,7 @@ if ($conn->query($sql) === true) {
         sno varchar(15) NOT NULL,
         quiz_no int NOT NULL,
         score int not null,
-        datetime DATETIME NOT NULL DEFAULT NOW() 
+        datetime DATETIME NOT NULL DEFAULT NOW(),
         PRIMARY KEY(sno,quiz_no),
         FOREIGN KEY(sno) REFERENCES student(sno),
         FOREIGN KEY(quiz_no) REFERENCES quiz(quiz_no)
@@ -89,18 +89,16 @@ if ($conn->query($sql) === true) {
     (4, '计算机','难','TCP/IP协议中,HTTP请求报文返回状态码404代表?','请求成功','目标被重定位','服务器繁忙','URL错误','D',0)
     ";
     $sql22 = "insert into rule values
-    (1, '难',10,5),
-    (2, '易',10,10),
-    (3, '中',20,5)
+    (1,'难',10,5)
     ";
 
     //默认管理员
     $pass = md5('123456');
-    $sql24 = "insert into users values(1,'admin','" . $pass . "'),(2,'user','" . $pass . "')";
+    $sql23 = "insert into users values(1,'admin','" . $pass . "'),(2,'user','" . $pass . "')";
 
     if ($conn2->multi_query($sql10) && $conn2->multi_query($sql11) && $conn2->multi_query($sql12) &&
         $conn2->multi_query($sql13) && $conn2->multi_query($sql14)&& $conn2->multi_query($sql15)
-        && $conn2->query($sql20) && $conn2->query($sql21) && $conn2->query($sql22) ) {
+        && $conn2->query($sql20) && $conn2->query($sql21) && $conn2->query($sql22) && $conn2->query($sql23) ) {
         echo "insert successfully";
     } else {
         echo "Error insert: " . $conn2->error;
@@ -110,7 +108,7 @@ if ($conn->query($sql) === true) {
     $conn2->close();
     //安装完成,跳转到主页
     echo "正在跳转到<a href='index.php'>主页</a>";
-    header("refresh:1;url=index.php");
+//    header("refresh:1;url=index.php");
 } else {
     // 安装失败/重复安装
     echo "Error creating database: " . $conn->error;

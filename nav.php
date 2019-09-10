@@ -39,7 +39,7 @@ if (!isset($_COOKIE["user"])) {
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="quiz.php?action=index">考试管理</a>
+        <a class="nav-link" href="quiz.php?action=index">考试规则</a>
       </li>
       
       <li class="nav-item">

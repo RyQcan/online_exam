@@ -71,6 +71,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
                 if ($stmt->prepare($sql)) {
                     $stmt->bind_param("sssss", $_GET['sno'], $_GET['sname'], $_GET['ssex'], $_GET['sclass'], $_GET['sdept']);
                     if ($stmt->execute()) {
+
                         echo '</br><div class="alert alert-success" role="alert">
                     添加成功!
                     </div>';
@@ -155,12 +156,10 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
 } else if (@$_GET['action'] == 'delete') {
     if ($_COOKIE["user"] == md5('admin#$%^adf')) {
         if (@$_GET['sno']) {
-            $sql = "delete from sc where sno='" . $_GET['sno'] . "'";
-            $sql2 = "delete from student where sno='" . $_GET['sno'] . "'";
-            if ($conn->query($sql) && $conn->query($sql2)) {
-                echo '</br><div class="alert alert-success" role="alert">
-                    已删除
-                    </div>';
+
+            $sql = "delete from student where sno='" . $_GET['sno'] . "'";
+            if ($conn->query($sql)) {
+                header("refresh:0;url=stu.php?action=search");
             } else {
                 echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
             }
@@ -168,10 +167,80 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     } else {
         echo '<div class="alert alert-danger" role="alert">你的权限不够!请联系管理员</div>';
     }
-} else if (@$_GET['action'] == 'alter'){
+    //修改
+
+} else if (@$_GET['action'] == 'alter') {
+    $sql = "SELECT * FROM student WHERE sno='" . $_GET['sno'] . "'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+
+        while ($row = $result->fetch_assoc()) {
+            echo '
+            
+                <form method="GET" action="stu.php">
+                <div class="form-row">
+                    <div class="col">
+                            <input type="text" class="form-control" name="sname" value=' . $row["sname"] . '>
+                    </div>
+                <div class="col">';
+            if ($row["ssex"] == '男') {
+                echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" checked type="radio" name="ssex" id="inlineRadio1" value="男">
+                            <label class="form-check-label" for="inlineRadio1">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="ssex" id="inlineRadio2" value="女">
+                            <label class="form-check-label" for="inlineRadio2">女</label>
+                        </div>';
+            } else {
+                echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="ssex" id="inlineRadio1" value="男">
+                            <label class="form-check-label" for="inlineRadio1">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" checked type="radio" name="ssex" id="inlineRadio2" value="女">
+                            <label class="form-check-label" for="inlineRadio2">女</label>
+                        </div>';
+            }
+
+
+            echo '</div>    
+                  <div class="col">
+                
+                        <input type="text" class="form-control" name="sclass" value=' . $row["sclass"] . '>
+                        </div>  
+                    <div class="col">
+                        <input type="text" class="form-control" name="sdept" value=' . $row["sdept"] . '>
+                  </div>  
+                
+                
+                <input type="hidden" name="action" value="alteraction">
+                <input type="hidden" name="sno" value=' . $row["sno"] . '>
+                <input type="submit" value="修改" class="btn btn-primary">
+                </div>  
+                </form>
+                
+           ';
+        }
+        echo '
+        </ul>
+    </div>';
+    }
+
+} else if (@$_GET['action'] == 'alteraction') {
+    if ($_COOKIE["user"] == md5('admin#$%^adf')) {
+        $sql = "UPDATE student SET sname='" . $_GET['sname'] . "', ssex='" . $_GET['ssex'] . "',sclass='" . $_GET['sclass'] . "',sdept='" . $_GET['sdept'] . "' WHERE sno='" . $_GET['sno'] . "'";
+        if ($conn->query($sql)) {
+            header("refresh:0;url=stu.php?action=search");
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
+        }
+    } else {
+        echo '<div class="alert alert-danger" role="alert">你的权限不够!请联系管理员</div>';
+    }
 
 } else {
-    header("refresh:1;url=index.php");
+    header("refresh:0;url=index.php");
     exit();
 }
 ?>
