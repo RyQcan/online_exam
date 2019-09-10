@@ -24,7 +24,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 ?>
-<?php include 'nav.php'; ?>   
+<?php include 'back_nav.php'; ?>
 <div class="container">
   <div class="row">
     <div class="col"><div id="bb" style="width: 600px;height:400px;"></div></div>

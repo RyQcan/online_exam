@@ -14,7 +14,7 @@
 
 <body>
 <!-- 导航栏 -->
-<?php include 'nav.php'; ?>
+<?php include 'back_nav.php'; ?>
 
 <?php
 include 'settings.php';

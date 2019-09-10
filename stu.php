@@ -12,7 +12,7 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<?php include 'nav.php'; ?>
+<?php include 'back_nav.php'; ?>
 
 <?php
 //包含配置文件
@@ -240,7 +240,7 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     }
 
 } else {
-    header("refresh:0;url=index.php");
+    header("refresh:0;url=admin.php");
     exit();
 }
 ?>

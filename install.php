@@ -107,8 +107,8 @@ if ($conn->query($sql) === true) {
 
     $conn2->close();
     //安装完成,跳转到主页
-    echo "正在跳转到<a href='index.php'>主页</a>";
-//    header("refresh:1;url=index.php");
+    echo "正在跳转到<a href='admin.php'>主页</a>";
+//    header("refresh:1;url=admin.php");
 } else {
     // 安装失败/重复安装
     echo "Error creating database: " . $conn->error;

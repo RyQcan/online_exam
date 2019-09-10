@@ -3,7 +3,7 @@
 if (@$_GET['action'] == "logout" && isset($_COOKIE["user"])) {
     // 设置cookies立即过期
     setcookie("user", "", time() - 3600);
-    header("Location:index.php");
+    header("Location:admin.php");
     exit();
 }
 ?>
@@ -31,7 +31,7 @@ margin-left:-200px;margin-top:-100px;border:1px solid #00F}
 
             </div>
             <div class="col">
-                <form name="login" action="login.php" method="get" autocomplete='off'>
+                <form name="login" action="teacher_login.php" method="get" autocomplete='off'>
                     <div class="form-group">
                         <input type="text" class="form-control" id="exampleInputEmail1" name="username" placeholder="用户名">
 
@@ -70,7 +70,7 @@ margin-left:-200px;margin-top:-100px;border:1px solid #00F}
                 if ($row["passwd"] == md5($_GET['passwd'])){
                 //创建用户的cookies
                     setcookie("user", md5($row['username'].'#$%^adf'), time() + 3600);
-                    header("Location:index.php");
+                    header("Location:admin.php");
                     exit();
                 } else {
                     exit('登录失败！点击此处 <a href="javascript:history.bac

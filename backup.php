@@ -11,7 +11,7 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<?php include 'nav.php'; ?>
+<?php include 'back_nav.php'; ?>
 <?php
 include 'settings.php';
 $name="back/".date("Y.m.d.h.i.s").".sql";
