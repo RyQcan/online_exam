@@ -11,14 +11,14 @@
     <title>学生管理</title>
 </head>
 <body>
+<!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <!-- 导航栏 -->
-<?php include 'back_nav.php'; ?>
+<?php include '../include/back_nav.php'; ?>
 <?php
-include 'settings.php';
-$name = "back/" . date("Y.m.d.h.i.s") . ".sql";
-
+$name = "backup/" . date("Y.m.d.h.i.s") . ".sql";
 $exec = "D:/wamp64/bin/mysql/mysql5.7.19/bin/mysqldump -u" . $username . " -p" . $password . " " . $dbname . " > " . $name;
 echo '<div class="alert alert-success" role="alert">备份成功!' . exec($exec) . $name . ' </br>恢复方法mysql -u username -p password  dbname < ' . $name . '</div>';
 
 ?>
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>

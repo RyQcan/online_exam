@@ -63,13 +63,9 @@ if (@$_GET['action'] == "logout" && isset($_COOKIE["user"])) {
         </div>
     </div>
     <br/>
+    <!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <?php
-include 'settings.php';
-$conn = new mysqli($servername, $username, $password, $dbname);
-// 检测连接
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 //登录
 if (@$_GET['action'] == "login" && @$_GET['username']) {
 
@@ -94,4 +90,4 @@ if (@$_GET['action'] == "login" && @$_GET['username']) {
     }
 }
 ?>
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>

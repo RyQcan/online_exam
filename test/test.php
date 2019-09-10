@@ -1,5 +1,5 @@
 <?php
-include 'settings.php';
+include './include/settings.php';
 $conn = new mysqli($servername, $username, $password, $dbname);
 // 检测连接
 if ($conn->connect_error) {

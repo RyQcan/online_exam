@@ -13,9 +13,11 @@
 </head>
 
 <body>
+<!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <!-- 导航栏 -->
-<?php include 'back_nav.php'; ?>
+<?php include '../include/back_nav.php'; ?>
 
 <a href="#">修改密码</a>
 
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>

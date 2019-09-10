@@ -13,16 +13,12 @@
 </head>
 
 <body>
+<!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <!-- 导航栏 -->
-<?php include 'back_nav.php'; ?>
+<?php include '../include/back_nav.php'; ?>
 
 <?php
-include 'settings.php';
-$conn = new mysqli($servername, $username, $password, $dbname);
-// 检测连接
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 //添加或查询成绩
 if (@$_GET['action'] == 'search') {
     echo '
@@ -49,7 +45,7 @@ if (@$_GET['action'] == 'search') {
                         <input type="text" class="form-control" name="sdept" placeholder="院系">
                     </div>
                     <input type="hidden" name="action" value="search">
-                    <input type="submit" value="查询">
+                    <input type="submit" value="查询" class="btn btn-primary">
                 </div>
                 </form>
             </div>
@@ -99,4 +95,4 @@ if (@$_GET['action'] == 'search') {
 }
 
 ?>
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>

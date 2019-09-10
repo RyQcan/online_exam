@@ -9,23 +9,17 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <!-- 引入 echarts.js -->
-    <script src="./static/echarts.js"></script>
-    <title>主页</title>
+    <script src="../static/echarts.js"></script>
+    <title>后台主页</title>
 
 </head>
 
 <body>
+
+<!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <!-- 导航栏 -->
-<?php
-include 'settings.php';
-$conn = new mysqli($servername, $username, $password, $dbname);
-// 检测连接
-if ($conn->connect_error) {
-    header("refresh:0;url=install.php");
-    die("Connection failed: " . $conn->connect_error);
-}
-?>
-<?php include 'back_nav.php'; ?>
+<?php include '../include/back_nav.php'; ?>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -215,7 +209,7 @@ if ($conn->connect_error) {
         }]
     });
 </script>
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>
 
 
 

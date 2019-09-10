@@ -11,17 +11,12 @@
     <title>考题管理</title>
 </head>
 <body>
+<!--判断是否已安装,若已经安装则进行数据库连接-->
+<?php include '../include/installed_judge.php';?>
 <!-- 导航栏 -->
-<?php include 'back_nav.php'; ?>
+<?php include '../include/back_nav.php'; ?>
 
 <?php
-//包含配置文件
-include 'settings.php';
-$conn = new mysqli($servername, $username, $password, $dbname);
-// 检测连接
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 //添加或查询考题
 if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     echo '
@@ -346,4 +341,4 @@ if (@$_GET['action'] == 'add' || @$_GET['action'] == 'search') {
     exit();
 }
 ?>
-<?php include "footer.php"; ?>
+<?php include "../include/footer.php"; ?>
