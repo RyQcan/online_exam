@@ -97,8 +97,8 @@ if ($conn->query($sql) === true) {
     $sql23 = "insert into users values(1,'admin','" . $pass . "'),(2,'user','" . $pass . "')";
 
     if ($conn2->multi_query($sql10) && $conn2->multi_query($sql11) && $conn2->multi_query($sql12) &&
-        $conn2->multi_query($sql13) && $conn2->multi_query($sql14)&& $conn2->multi_query($sql15)
-        && $conn2->query($sql20) && $conn2->query($sql21) && $conn2->query($sql22) && $conn2->query($sql23) ) {
+        $conn2->multi_query($sql13) && $conn2->multi_query($sql14) && $conn2->multi_query($sql15)
+        && $conn2->query($sql20) && $conn2->query($sql21) && $conn2->query($sql22) && $conn2->query($sql23)) {
         echo "insert successfully";
     } else {
         echo "Error insert: " . $conn2->error;
