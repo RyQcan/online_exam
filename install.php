@@ -62,12 +62,11 @@ if ($conn->query($sql) === true) {
         )ENGINE=INNODB  DEFAULT CHARSET=utf8";
     //考试记录表
     $sql15 = "CREATE TABLE quiz_record(
-        sno varchar(15) NOT NULL,
+        md5_sno varchar(66) NOT NULL,
         quiz_no int NOT NULL,
         score int not null,
         datetime DATETIME NOT NULL DEFAULT NOW(),
-        PRIMARY KEY(sno,quiz_no),
-        FOREIGN KEY(sno) REFERENCES student(sno),
+        PRIMARY KEY(md5_sno,quiz_no),
         FOREIGN KEY(quiz_no) REFERENCES quiz(quiz_no)
         )ENGINE=INNODB  DEFAULT CHARSET=utf8";
 
