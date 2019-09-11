@@ -14,7 +14,7 @@
 
 <body>
 <!--判断是否已安装,若已经安装则进行数据库连接-->
-<?php include '../include/installed_judge.php';?>
+<?php include '../include/installed_judge.php'; ?>
 <!-- 导航栏 -->
 <?php include '../include/back_nav.php'; ?>
 
@@ -31,10 +31,7 @@ if (@$_GET['action'] == 'search') {
                     <div class="col">
                         <input type="text" class="form-control" name="sno" placeholder="学号">
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="quiz_no" placeholder="考试号">
-                    </div>
-               
+                                  
                     <div class="col">
                         <input type="text" class="form-control" name="sname" placeholder="姓名">
                     </div>
@@ -50,7 +47,7 @@ if (@$_GET['action'] == 'search') {
                 </form>
             </div>
             </li>';
-    $sql = "SELECT * FROM quiz_record WHERE 1=1 ";
+    $sql = "SELECT sno FROM student WHERE 1=1 ";
     if (@$_GET['sno']) {
         $sql = $sql . "AND sno='" . $_GET['sno'] . "'";
     }
@@ -63,9 +60,7 @@ if (@$_GET['action'] == 'search') {
     if (@$_GET['sdept']) {
         $sql = $sql . "AND sno in (SELECT sno FROM student WHERE sdept='" . $_GET['sdept'] . "')";
     }
-    if (@$_GET['cno']) {
-        $sql = $sql . "AND quiz_no='" . $_GET['quiz_no'] . "'";
-    }
+
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -75,17 +70,31 @@ if (@$_GET['action'] == 'search') {
                 <div class="col">学号</div>
                 <div class="col">考试号</div>
                 <div class="col">分数</div>
+                <div class="col">考试时间</div>
             </div>
             </li>';
         while ($row = $result->fetch_assoc()) {
-            echo '
+            $sno=$row["sno"];
+            $md5_sno = md5($row["sno"] . '#$%^adf');
+            $sql2 = "SELECT * FROM quiz_record WHERE md5_sno='" . $md5_sno . "'";
+
+            $result2 = $conn->query($sql2);
+            if ($result2->num_rows > 0) {
+                while ($row2 = $result2->fetch_assoc()) {
+                    echo '
             <li class="list-group-item">
             <div class="row">
-                <div class="col">' . $row["sno"] . '</div>
-                <div class="col">' . $row["quiz_no"] . '</div>
-                <div class="col">' . $row["score"] . '</div>
+                <div class="col">' . $sno . '</div>
+                <div class="col">' . $row2["quiz_no"] . '</div>
+                <div class="col">' . $row2["score"] . '</div>
+                <div class="col">' . $row2["datetime"] . '</div>
             </div>
             </li>';
+                }
+
+            }
+
+
         }
         echo '
             </ul>';
