@@ -144,8 +144,6 @@ if ($conn->query($sql) === true) {
     } else {
         echo "Error insert: " . $conn2->error;
     }
-
-
     $conn2->close();
     //安装完成,跳转到主页
     echo "正在跳转到<a href='./front/index.php'>主页</a>";
