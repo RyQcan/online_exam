@@ -193,7 +193,7 @@ if (!isset($_COOKIE["user"])) {
                         echo '
         <div>
             <ul>
-                <li class="list-group-item">
+                <li class="list-group-item"> 
                 <div class="row">
                     <div class="col">' . $row["quest_type"] . '</div>
                     <div class="col">' . $row["stem"] . '</div>
